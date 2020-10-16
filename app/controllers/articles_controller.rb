@@ -14,8 +14,12 @@ class ArticlesController < ApplicationController
     def create
         @article = Article.new(article_params)
     
-        @article.save
-        redirect_to @article
+# If @article.save fails in this situation, we need to show the form back to the user
+        if @article.save
+            redirect_to @article
+          else
+            render 'new'
+          end
     end
    
   private
